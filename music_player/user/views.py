@@ -11,7 +11,7 @@ class UserProfile(View):
         user = request.user
         profile = Profile.objects.get(user = user)
         print(profile)
-        return render(request,'profile.html',{'profile':profile})
+        return render(request,'user/profile.html',{'profile':profile})
 
 class UserLogin(View):
     def get(self,request,*args,**kwargs):
@@ -27,8 +27,8 @@ class UserLogin(View):
             print(username,password,user)
             if user is not None:
                 login(request, user)
-                return redirect(to='/')
-        return render(request,'login.html',{'form':form})
+                return redirect('user_profile')
+        return render(request,'user/login.html',{'form':form})
 
 class UserRegister(View):
     def get(self,request,*args,**kwargs):
@@ -37,19 +37,19 @@ class UserRegister(View):
     def post(self,request,*args,**kwargs):
         form = RegisterForm(request.POST)
         if form.is_valid():
-            # first_name = form.cleaned_data['first_name']
-            # last_name = form.cleaned_data['last_name']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
-            # password = form.cleaned_data['pasword']
+            password = form.cleaned_data['password']
             username =email.split('@')[0]+email.split('@')[1].split('.')[0]
-            obj = form.save(commit=False)
-            obj.username = username
-            obj.save()
-            user = User.objects.get(username=username)
+            user = User.objects.create_user(username=username,email=email,password=password)
+            user.first_name = first_name
+            user.last_name = last_name
             group = Group.objects.get(name='regular')
             user.groups.add(group)
-            return redirect(to='/')
-        return render(request,'register.html',{'form':form})
+            user.save()
+            return redirect('user_profile')
+        return render(request,'user/register.html',{'form':form})
 
 class UserLogout(View):
     def get(self,request,*args,**kwargs):

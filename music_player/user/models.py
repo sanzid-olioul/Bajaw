@@ -6,9 +6,9 @@ from PIL import Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete = models.CASCADE)
-    cover_photo = models.ImageField(upload_to='Cover',default = '/logo/cover.png')
-    profile_photo = models.ImageField(upload_to='Profile',default = '/logo/profile.jpg')
-    liked_song = models.ForeignKey(Songs,on_delete = models.CASCADE,null = True,blank = True)
+    cover_photo = models.ImageField(upload_to='Cover',default = 'logo/cover.png')
+    profile_photo = models.ImageField(upload_to='Profile',default = 'logo/profile.jpg')
+    liked_song = models.ManyToManyField(Songs,null = True,blank = True)
     USER_TYPE_LIST = [
         ('Pri','Premium'),
         ('Reg','Regular'),
@@ -20,17 +20,18 @@ class Profile(models.Model):
     
     def save(self,*args, **kwargs):
         try:
-            tst = Profile.objects.get(id=self.id)
-            if tst.cover_photo != self.cover_photo:
-                print(tst.cover_photo.name)
+            prev = Profile.objects.get(id=self.id)
+            if prev.cover_photo != self.cover_photo:
                 import os
-                if os.path.exists(tst.cover_photo.path):
-                    os.remove(tst.cover_photo.path)
-            if tst.profile_photo != self.profile_photo:
-                print(tst.profile_photo.name)
+                if os.path.exists(prev.cover_photo.path):
+                    print(prev.cover_photo.name)
+                    os.remove(prev.cover_photo.path)
+            if prev.profile_photo != self.profile_photo:
+                
                 import os
-                if os.path.exists(tst.profile_photo.path):
-                    os.remove(tst.profile_photo.path)
+                if os.path.exists(prev.profile_photo.path):
+                    print(prev.profile_photo.name)
+                    os.remove(prev.profile_photo.path)
         except:
             pass
         finally:
