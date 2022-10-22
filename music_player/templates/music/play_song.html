@@ -63,6 +63,7 @@ Songs
     <script src="{% static './js/music.js' %}"></script>
     <script>
         playpauseTrack();
+        curr_track.play();
         if (ply !== undefined) {
             ply.then(_ => {
                 console.log("i am playing")

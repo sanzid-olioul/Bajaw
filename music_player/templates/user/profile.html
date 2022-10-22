@@ -21,27 +21,27 @@ Register
                 </div>
                 <div class="ms-3" style="margin-top: 130px;">
                     <h5>{{user.first_name}} {{user.last_name}}</h5>
-                    <p>New York</p>
+                    <p>{{profile.user_type}}</p>
                 </div>
                 </div>
                 <div class="p-4 text-black" style="background-color: #f8f9fa;">
                 <div class="d-flex justify-content-end text-center py-1">
                     <div>
-                    <p class="mb-1 h5">253</p>
-                    <p class="small text-muted mb-0">Photos</p>
+                    <p class="mb-1 h5">{{profile.user_type}}</p>
+                    <p class="small text-muted mb-0">Favourite Songs</p>
                     </div>
                     <div class="px-3">
                     <p class="mb-1 h5">1026</p>
                     <p class="small text-muted mb-0">Followers</p>
                     </div>
                     <div>
-                    <p class="mb-1 h5">478</p>
+                    {% comment %} <p class="mb-1 h5">478</p>
                     <p class="small text-muted mb-0">Following</p>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
                 </div>
                 <div class="card-body p-4 text-black">
-                <div class="mb-5">
+                 <div class="mb-5">
                     <p class="lead fw-normal mb-1">About</p>
                     <div class="p-4" style="background-color: #f8f9fa;">
                     <p class="font-italic mb-1">Web Developer</p>
@@ -62,6 +62,10 @@ Register
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
                         alt="image 1" class="w-100 rounded-3">
                     </div>
+                    <div class="col mb-2">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
+                            alt="image 1" class="w-100 rounded-3">
+                        </div>
                 </div>
                 <div class="row g-2">
                     <div class="col">
@@ -72,6 +76,15 @@ Register
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
                         alt="image 1" class="w-100 rounded-3">
                     </div>
+                    <div class="col">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
+                            alt="image 1" class="w-100 rounded-3">
+                        </div>
+                    
+                        <div class="col">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
+                                alt="image 1" class="w-100 rounded-3">
+                            </div>
                 </div>
                 </div>
             </div>

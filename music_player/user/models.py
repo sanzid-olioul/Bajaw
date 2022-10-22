@@ -1,3 +1,4 @@
+from enum import unique
 from django.db import models
 from django.contrib.auth.models import User
 from main.models import Songs
@@ -5,9 +6,9 @@ from PIL import Image
 # Create your models here.
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete = models.CASCADE)
-    cover_photo = models.ImageField(upload_to='Cover',default = 'logo/cover.png')
-    profile_photo = models.ImageField(upload_to='Profile',default = 'logo/profile.jpg')
+    user = models.OneToOneField(User,primary_key=True,on_delete = models.CASCADE)
+    cover_photo = models.ImageField(upload_to='Cover')
+    profile_photo = models.ImageField(upload_to='Profile')
     liked_song = models.ManyToManyField(Songs,null = True,blank = True)
     USER_TYPE_LIST = [
         ('Pri','Premium'),

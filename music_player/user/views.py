@@ -10,13 +10,12 @@ class UserProfile(View):
     def get(self,request,*args,**kwargs):
         user = request.user
         profile = Profile.objects.get(user = user)
-        print(profile)
         return render(request,'user/profile.html',{'profile':profile})
 
 class UserLogin(View):
     def get(self,request,*args,**kwargs):
         frm = LoginForm()
-        return render(request,'login.html',{'form':frm})
+        return render(request,'user/login.html',{'form':frm})
     def post(self,request,*args,**kwargs):
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -33,7 +32,7 @@ class UserLogin(View):
 class UserRegister(View):
     def get(self,request,*args,**kwargs):
         frm = RegisterForm()
-        return render(request,'register.html',{'form':frm})
+        return render(request,'user/register.html',{'form':frm})
     def post(self,request,*args,**kwargs):
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -48,7 +47,7 @@ class UserRegister(View):
             group = Group.objects.get(name='regular')
             user.groups.add(group)
             user.save()
-            return redirect('user_profile')
+            return redirect('user_login')
         return render(request,'user/register.html',{'form':form})
 
 class UserLogout(View):
