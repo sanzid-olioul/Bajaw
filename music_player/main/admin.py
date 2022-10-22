@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Songs,Album,Singer
-@admin.register(Songs)
+from .models import Song,Album,Singer
+@admin.register(Song)
 class SongsAdmin(admin.ModelAdmin):
     list_display = ['song_name','extension','music_file','duration']
 @admin.register(Album)

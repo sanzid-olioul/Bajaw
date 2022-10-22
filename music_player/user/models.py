@@ -1,15 +1,21 @@
-from enum import unique
 from django.db import models
 from django.contrib.auth.models import User
-from main.models import Songs
+from main.models import Song
 from PIL import Image
+import time
 # Create your models here.
-
+def user_directory_path(instance, filename):
+    user_name = str(instance)[:-8]
+    timestap = int(time.time()*1000)
+    _,ext = filename.split('.')
+    f_name = user_name + str(timestap)+'.'+ext
+    return f'user/{user_name}/{f_name}'
+    
 class Profile(models.Model):
     user = models.OneToOneField(User,primary_key=True,on_delete = models.CASCADE)
-    cover_photo = models.ImageField(upload_to='Cover')
-    profile_photo = models.ImageField(upload_to='Profile')
-    liked_song = models.ManyToManyField(Songs,null = True,blank = True)
+    cover_photo = models.ImageField(upload_to=user_directory_path,default = 'logo/cover.png')
+    profile_photo = models.ImageField(upload_to=user_directory_path,default = 'logo/profile.jpg')
+    liked_song = models.ManyToManyField(Song)
     USER_TYPE_LIST = [
         ('Pri','Premium'),
         ('Reg','Regular'),
