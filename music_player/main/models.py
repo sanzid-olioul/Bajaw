@@ -36,7 +36,7 @@ class Singer(models.Model):
             c_p.save(self.image.path)
 
 def album_directory_path(instance, filename):
-    album_name = str(instance.album)
+    album_name = str(instance.album_name)
     _,ext = filename.split('.')
     timestap = int(time.time()*1000)
     f_name = album_name + str(timestap)+'.'+ext
@@ -70,7 +70,7 @@ def file_directory_path(instance, filename):
     album_name = str(instance.album)
     _,ext = filename.split('.')
     f_name = instance.song_name +'.'+ext
-    return f'user/{album_name}/{f_name}'
+    return f'music/{album_name}/{f_name}'
 
 class Song(models.Model):
     song_name = models.CharField(max_length = 50)
@@ -87,6 +87,6 @@ class Song(models.Model):
         ln = str(int(ln//3600)) +':'+ str(int((ln - 3600*(ln//3600))//60)) + ':'+str(int(round(ln - (3600*(ln//3600)+ 60*(ln//60)))))
         self.duration = ln
         file_name = self.music_file.name
-        _,ext = file_name.split('.')
+        *_,ext = file_name.split('.')
         self.extension = ext
         return super().save(*arg,**kwarg)
