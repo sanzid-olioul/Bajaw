@@ -5,11 +5,17 @@ from .models import Album, Song
 from user.models import Profile
 # Create your views here.
 class SongsList(View):
+    '''
+    For passing all the songs list
+    '''
     def get(self,request,*args,**kwargs):
         songs = Song.objects.all()
         return render(request,'music/song_list.html',{'songs':songs})
 
 class PlaySong(View):
+    '''
+    Playing a perticular song
+    '''
     def get(self,request,*args,**kwargs):
         song = Song.objects.get(pk=kwargs['id'])
         
@@ -17,6 +23,9 @@ class PlaySong(View):
         return render(request,'music/play_song.html',{'song':song})
 
 class FavouriteSongs(View):
+    '''
+    User favourite song will be send
+    '''
     def get(self,request,*args,**kwargs):
         user = request.user
         profile = Profile.objects.get(user = user)

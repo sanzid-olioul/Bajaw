@@ -13,6 +13,9 @@ def singer_directory_path(instance, filename):
     return f'singer/{singer_name}/{f_name}'
 
 class Singer(models.Model):
+    '''
+    Singer profile model
+    '''
     singer_name = models.CharField(max_length = 50)
     image = models.ImageField(upload_to = singer_directory_path,default = 'logo/profile.jpg')
     about = models.CharField(max_length = 150)
@@ -43,6 +46,9 @@ def album_directory_path(instance, filename):
     return f'album/{album_name}/{f_name}'
 
 class Album(models.Model):
+    '''
+    Album profile model
+    '''
     album_name = models.CharField(max_length = 50)
     image = models.ImageField(upload_to = album_directory_path,default = 'logo/profile.jpg')
     singer = models.ForeignKey(Singer,on_delete = models.CASCADE)
@@ -68,11 +74,14 @@ class Album(models.Model):
 
 def file_directory_path(instance, filename):
     album_name = str(instance.album)
-    _,ext = filename.split('.')
+    *_,ext = filename.split('.')
     f_name = instance.song_name +'.'+ext
     return f'music/{album_name}/{f_name}'
 
 class Song(models.Model):
+    '''
+    Song model stores song and its poperty
+    '''
     song_name = models.CharField(max_length = 50)
     album = models.ForeignKey(Album,on_delete = models.CASCADE,null =True,blank = True)
     extension = models.CharField(max_length = 10,blank=True,null=True,editable = False)

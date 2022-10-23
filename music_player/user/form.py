@@ -2,6 +2,9 @@ from dataclasses import fields
 from django import forms
 from django.contrib.auth.models import User
 class RegisterForm(forms.ModelForm):
+    '''
+    User register form for new user
+    '''
     def __init__(self, *args, **kwargs):
         kwargs["label_suffix"] = ""
         super().__init__(*args, **kwargs)
@@ -25,6 +28,9 @@ class RegisterForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
+    '''
+    User login form for vaid users
+    '''
     email = forms.EmailField(label='Email',widget=forms.EmailInput(attrs={'placeholder': 'Enter your Email'}))
     pasword = forms.CharField(max_length=50,label='Password',widget=forms.PasswordInput(attrs={'placeholder': 'Enter your Password'}))
     def __init__(self, *args, **kwargs):
