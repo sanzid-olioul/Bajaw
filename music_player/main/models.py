@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image
+from django.contrib.auth.models import User
 import mutagen
 import time
 
@@ -51,7 +52,11 @@ class Album(models.Model):
     '''
     album_name = models.CharField(max_length = 50)
     image = models.ImageField(upload_to = album_directory_path,default = 'logo/profile.jpg')
-    singer = models.ForeignKey(Singer,on_delete = models.CASCADE)
+    singers = models.ManyToManyField(Singer)
+
+    def get_singers(self):
+        return ','.join([str(singer) for singer in self.singers.all()])
+
 
     def __str__(self) -> str:
         return self.album_name
@@ -87,6 +92,7 @@ class Song(models.Model):
     extension = models.CharField(max_length = 10,blank=True,null=True,editable = False)
     music_file = models.FileField(upload_to=file_directory_path)
     duration = models.CharField(max_length = 50,null=True,blank = True,editable = False)
+    liked_by = models.ManyToManyField(User)
 
     def __str__(self) -> str:
         return self.song_name

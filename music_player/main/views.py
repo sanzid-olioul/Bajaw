@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from .models import Album, Song
-from user.models import Profile
+
 # Create your views here.
 class SongsList(View):
     '''
@@ -28,7 +28,6 @@ class FavouriteSongs(View):
     '''
     def get(self,request,*args,**kwargs):
         user = request.user
-        profile = Profile.objects.get(user = user)
-        print(profile.liked_song)
+        songs = Song.objects.filter(liked_by = user)
 
-        return HttpResponse(request,'Working on it.')
+        return render(request,'music/song_list.html',{'songs':songs})
