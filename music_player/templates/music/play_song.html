@@ -11,7 +11,7 @@ Songs
                 <div class="track-art" style="background: url('{% get_media_prefix %}{{song.album.image}}')">
                 </div>
                 <div class="track-name">{{song.album.album_name}}</div>
-                <div class="track-artist">{{song.album.singer}}</div>
+                <div class="track-artist">{{song.album.get_singers}}</div>
             </div>
             
             <div class="slider_container">
@@ -59,18 +59,28 @@ Songs
         let curr_track = document.createElement('audio');
         curr_track.src='{% get_media_prefix %}{{song.music_file}}';
         curr_track.allow = "autoplay";
+        
     </script>
     <script src="{% static './js/music.js' %}"></script>
     <script>
-        playpauseTrack();
-        curr_track.play();
+        ply = curr_track.play();
         if (ply !== undefined) {
             ply.then(_ => {
-                console.log("i am playing")
+                isPlaying = true;
+                track_art.classList.add('rotate');
+                wave.classList.add('loader');
+                playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+                console.log('bro caler upor crow')
             }).catch(error => {
-              console.log('sorry'+error)
+                console.log('sorry'+error)
             });
           }
+          curr_track.addEventListener('ended',()=>{
+            isPlaying = false;
+            track_art.classList.remove('rotate');
+            wave.classList.remove('loader');
+            playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+        });
     </script>
     {% comment %} <script src="{% static './js/music.js' %}"></script> {% endcomment %}
     {% endblock inner_content %}
