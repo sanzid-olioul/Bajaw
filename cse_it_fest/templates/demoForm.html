@@ -1,0 +1,73 @@
+{% load static %}
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'qfc-light.css' %}">
+  {% comment %} <link rel="stylesheet" href="{% static 'qfc-dark.css' %}"> {% endcomment %}
+  <!-- <link rel="stylesheet" href="qfc-light.css"> -->
+
+</head>
+
+<body>
+  <div class="qfc-container">
+    <h2>Intra Department IT Fest</h2>
+    <label>Organized by PUST CSE</label>
+    <form action = {% url 'register' %} method = "POST">
+      {% csrf_token %}
+      <div>
+      <label>Team Details</label>
+      <div>
+          <input placeholder="Team Name" type="text" name="team_name" required>
+      </div>
+      <div>
+          <input placeholder="Team Department" type="text" name="team_department" required>
+      </div>
+        <label>First Contestent</label>
+        <div>
+            <input placeholder="Full Name" type="text" name = "first_name" required>
+        </div>
+        <div>
+            <input placeholder="Roll Number" type="number" name = "first_roll" required>
+        </div>
+        <div>
+            <input placeholder="Registration Number" type="number" name = "first_reg" required>
+        </div>
+        <label>Secound Contestent</label>
+        <div>
+          <input placeholder="Full Name" type="text" name = "secound_name" required>
+      </div>
+      <div>
+          <input placeholder="Roll Number" type="number" name = "secound_roll" required>
+      </div>
+      <div>
+          <input placeholder="Registration Number" type="number" name = "secound_reg" required>
+      </div>
+      <label>Third Contestent</label>
+      <div>
+        <input placeholder="Full Name" type="text" name = "third_name" required>
+    </div>
+    <div>
+        <input placeholder="Roll Number" type="number" name = "third_roll" required>
+    </div>
+    <div>
+        <input placeholder="Registration Number" type="number" name = "third_reg" required>
+    </div>      
+        <div>
+          <label>Contest Type</label>
+          <select name="contest_type">
+              <option disabled selected value="--">Select Contest Type</option>
+              <option value="PROGRAMMING_CONTEST">Programming Contest</option>
+              <option value="PROJECT_EXHITION">Project Show</option>
+              <option value="IT_QUIZ">IT Quiz</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+<style>
+</style>
+</html>
