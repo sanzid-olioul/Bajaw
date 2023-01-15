@@ -42,4 +42,4 @@ class TeamContestent(models.Model):
     contestent = models.ForeignKey(Contestent, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.contestent + " of team "+ self.team
+        return str(self.contestent)

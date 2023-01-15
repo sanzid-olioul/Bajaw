@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from django.views import View
 from .models import Team,Contestent,ContestName,TeamContestent
+from django.urls import reverse
 # Create your views here.
 
 
@@ -58,3 +59,65 @@ class Register(View):
             cnt3.save()
 
         return render(request, "demoForm.html")
+
+class List(View):
+    def get(self, request, *args, **kwargs):
+        roll = kwargs.get('roll_no',None)
+        if roll:
+            user = get_object_or_404(Contestent,roll_no = roll)
+            team_contests = TeamContestent.objects.filter(contestent = user)
+            res = []
+            for team_contest in team_contests:
+                
+                team = team_contest.team
+                contest = ContestName.objects.get(contest_name = team.contest_type)
+                contestents = TeamContestent.objects.filter(team= team)
+                print(contestents[0].contestent)
+                temp = {
+                    'team':team,
+                    'contestents':contestents,
+                    'contest_type':contest
+                }
+                res.append(temp)
+            print(res)
+            return render(request, "list_display.html",{'datas':res})
+        else:
+            teams = Team.objects.all()
+            res = []
+            for team in teams:
+                contest = ContestName.objects.get(contest_name = team.contest_type)
+                contestents = TeamContestent.objects.filter(team= team)
+                print(contestents[0].contestent)
+                temp = {
+                    'team':team,
+                    'contestents':contestents,
+                    'contest_type':contest
+                }
+                res.append(temp)
+            print(res)
+            return render(request, "list_display.html",{'datas':res})
+
+    def post(self, request, *args, **kwargs):
+        roll = request.POST.get('search')
+        if roll:
+            user = get_object_or_404(Contestent,roll_no = roll)
+            team_contests = TeamContestent.objects.filter(contestent = user)
+            res = []
+            for team_contest in team_contests:
+                
+                team = team_contest.team
+                contest = ContestName.objects.get(contest_name = team.contest_type)
+                contestents = TeamContestent.objects.filter(team= team)
+                print(contestents[0].contestent)
+                temp = {
+                    'team':team,
+                    'contestents':contestents,
+                    'contest_type':contest
+                }
+                res.append(temp)
+            print(res)
+            return render(request, "list_display.html",{'datas':res})
+        return redirect('list')
+        
+
+        

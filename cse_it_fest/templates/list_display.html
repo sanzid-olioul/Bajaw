@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'liststyle.css' %}">
+    <link rel="stylesheet" href="{% static 'nav.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="{% url 'register' %}">Home</a>
+        <a href="{% url 'list' %}">All Teams</a>
+        <div class="search-container">
+          <form action="{% url 'list' %}" method="POST">
+            {% csrf_token %}
+            <input type="number" required placeholder="Search roll.." name="search">
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    <h2>Team Details</h2>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+            <th>Team name</th>
+            <th>Contest Type</th>
+            <th>Department</th>
+            <th>1st User Name</th>
+            <th>1st User Roll</th>
+            <th>1st User Reg</th>
+            <th>2nd User Name</th>
+            <th>2nd User Roll</th>
+            <th>2nd User Reg</th>
+            <th>3rd User Name</th>
+            <th>3rd User Roll</th>
+            <th>3rd User Reg</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td>{{data.team.team_name}}</td>
+                <td>{{data.contest_type.contest_name}}</td>
+                <td>{{data.team.department}}</td>
+
+                {% for contestent in data.contestents %}
+                <td>{{contestent.contestent.full_name}}</td>
+                <td>{{contestent.contestent.roll_no}}</td>
+                <td>{{contestent.contestent.reg_no}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+        <tbody>
+    </table>
+</div>
+</body>
+</html>
