@@ -9,11 +9,24 @@ Register
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-9 col-xl-7"> {% endcomment %}
             <div class="card">
-                <div class="rounded-top text-white d-flex flex-row" style="background-image :url({% get_media_prefix %}{{profile.cover_photo}}); height:200px;">
+                
+                {% if profile.cover_photo %}
+                    <div class="rounded-top text-white d-flex flex-row" 
+                    style="background-image :url('{% get_media_prefix %}{{profile.cover_photo}}'); height:200px;">
+                    {% else %}
+                    <div class="rounded-top text-white d-flex flex-row" 
+                    style="background-image : url('{% static cover_photo %}'); height:200px;">
+                    {% endif %}
                 <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                    <img src="{% get_media_prefix %}{{profile.profile_photo}}"
-                    alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
-                    style="width: 150px; z-index: 1">
+                    {% if profile.avater %}
+                    <img src="{% get_media_prefix %}{{profile.avater}}"
+                        alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                        style="width: 150px; z-index: 1">
+                    {% else %}
+                    <img src="{% static './icon/boy-avater.jpg' %}"
+                        alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                        style="width: 150px; z-index: 1">
+                    {% endif %}
                     <button type="text" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
                     style="z-index: 1;">
                     Edit profile
